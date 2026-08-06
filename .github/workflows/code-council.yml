@@ -1,0 +1,44 @@
+name: Code Council AI - Engineering Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+  statuses: write
+
+jobs:
+  code-council-governance:
+    name: Code Council AI Governance
+    # Use a self-hosted runner for local Ollama. Set CODE_COUNCIL_RUNNER to
+    # ubuntu-latest only when the selected LLM provider is remotely reachable.
+    runs-on: ${{ vars.CODE_COUNCIL_RUNNER || 'self-hosted' }}
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Code Council
+        working-directory: backend
+        run: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
+
+      - name: Run autonomous engineering council
+        working-directory: backend
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CCAI_LLM_PROVIDER: ${{ vars.CCAI_LLM_PROVIDER || 'ollama' }}
+          CCAI_OLLAMA_HOST: ${{ vars.CCAI_OLLAMA_HOST || 'http://localhost:11434' }}
+          CCAI_OLLAMA_MODEL: ${{ vars.CCAI_OLLAMA_MODEL || 'qwen2.5-coder:14b' }}
+          CCAI_OPENAI_API_KEY: ${{ secrets.CCAI_OPENAI_API_KEY }}
+          CCAI_OPENAI_MODEL: ${{ vars.CCAI_OPENAI_MODEL || 'gpt-4o-mini' }}
+        run: python -m app.github_action

@@ -1,0 +1,9 @@
+# Workspace and runtime artifacts
+.freebuff/
+*.db
+*.tsbuildinfo
+
+# Local secrets and environment overrides
+.env
+.env.*
+!.env.example
