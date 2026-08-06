@@ -23,10 +23,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+      # Windows self-hosted runners use their locally installed Python. This
+      # avoids actions/setup-python's toolcache installer, which can fail under
+      # locked-down Windows policies.
+      - name: Verify Python runtime
+        run: python --version
 
       - name: Install Code Council
         working-directory: backend
