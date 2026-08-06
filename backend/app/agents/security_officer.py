@@ -136,4 +136,4 @@ class SecurityOfficer:
             "trace": trace,
         }
 
-# Governance workflow smoke-test change.
+# Governance workflow smoke-test #2 — re-trigger after incomplete prior run.
