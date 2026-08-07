@@ -1,129 +1,357 @@
+<div align="center">
+
 # 🏛️ Code Council AI
 
-> **GitHub-Native Autonomous Engineering Governance Platform**
+### AI Engineering Governance Platform
 
-Observe • Reason • Adapt • Govern
+**An Autonomous Multi-Agent Pull Request Review Board for GitHub**
+
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)]()
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688)]()
+[![React](https://img.shields.io/badge/React-19-61DAFB)]()
+[![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-2088FF)]()
+[![Ollama](https://img.shields.io/badge/LLM-Ollama-black)]()
+[![License](https://img.shields.io/badge/License-MIT-green)]()
+
+*"A software engineering review board—not just another AI code reviewer."*
+
+</div>
 
 ---
 
-## 🚀 Overview
+# 🚀 Overview
 
-Modern software development is undergoing a fundamental shift.
+Code Council AI is an **AI-powered engineering governance platform** that transforms traditional pull request reviews into a collaborative decision-making process using multiple specialized AI agents.
 
-AI coding assistants like Claude Code, GitHub Copilot, Cursor, Gemini CLI and Codex can generate production-ready software in minutes.
+Instead of relying on a single AI reviewer, Code Council AI dynamically assembles an expert review board consisting of specialists such as:
 
-However, engineering governance has not evolved at the same pace.
+- 🔒 Security Officer
+- 🏗 Principal Architect
+- 🧪 QA Director
+- ⚙️ DevOps Lead
+- 🛡 Red Team
+- 👑 Release Manager
 
-Today's GitHub Pull Requests provide little visibility into:
+Each agent independently evaluates the pull request, collaborates through a shared orchestration layer, and contributes toward a final release decision.
 
-- How AI generated the code
-- Which tools the AI invoked
-- Token consumption
-- API usage
-- Engineering risk
-- Security posture
-- Production readiness
-
-Most organizations still rely on fragmented manual reviews across Security, QA, Architecture and DevOps.
-
-Code Council AI introduces an autonomous engineering governance layer that operates directly inside GitHub Pull Requests.
-
-Instead of acting as another AI reviewer, Code Council AI behaves like an engineering organization composed of autonomous specialist agents that collaboratively determine whether software is ready for production.
+The result is an **auditable, explainable, and enforceable** review process directly integrated into GitHub.
 
 ---
 
 # ✨ Key Features
 
-## 🤖 Autonomous Engineering Council
+## 🤖 Multi-Agent AI Review
 
-- Release Manager
-- Security Officer
-- Principal Architect
-- QA Director
-- DevOps Lead
-- Red Team
-
-Each agent owns a distinct engineering discipline and collaborates dynamically during review.
+Different AI agents specialize in different engineering domains rather than relying on one generic LLM.
 
 ---
 
-## 📊 AI Observability
+## 🧠 Intelligent Planning Agent
 
-Track every engineering review with:
+Before reviewing begins, a Planning Agent determines:
 
-- LLM Calls
-- Token Consumption
-- API Usage
-- Tool Invocations
-- Execution Duration
-- Cost Analytics
-- Confidence Scores
-- Engineering Timeline
+- Which agents should participate
+- Which agents can safely be skipped
+- Estimated review cost
+- Risk level
+- Review complexity
 
----
-
-## 📈 Dynamic Planning
-
-Unlike traditional pipelines, Code Council AI does not execute every specialist.
-
-The Release Manager determines:
-
-- Which agents should execute
-- Which agents can be skipped
-- Which investigations require additional review
-- When confidence is sufficient
+This dramatically reduces unnecessary LLM usage.
 
 ---
 
-## 🔐 Security First
+## 🤝 Collaborative Decision Making
 
-Built-in support for:
+Agents don't work independently.
 
-- Semgrep
-- Bandit
-- OWASP checks
-- Secret detection
-- Authentication analysis
-- Authorization analysis
-- Prompt Injection detection
+Instead they communicate through a structured shared state where they can:
 
----
-
-## 📦 GitHub Native
-
-No custom dashboard.
-
-Everything happens inside GitHub.
-
-✔ Pull Requests
-
-✔ Check Runs
-
-✔ Status Checks
-
-✔ Review Comments
-
-✔ Timeline Events
+- Request additional investigation
+- Ask questions
+- Escalate risks
+- Validate findings
+- Share evidence
 
 ---
 
-# 🏗 Architecture
+## 🚦 Release Governance
 
-(Insert architecture diagram here)
+Instead of simply commenting on a PR, Code Council AI produces one of three enforceable outcomes:
+
+| Verdict | Meaning |
+|----------|----------|
+| ✅ GO | Safe to merge |
+| ⚠ NEEDS_CHANGES | Improvements required |
+| ❌ NO_GO | Merge blocked |
+
+The verdict is published as a **GitHub Check Run**, allowing organizations to enforce engineering policies automatically.
+
+---
+
+## 📊 Full Observability
+
+Every review stores:
+
+- Timeline
+- Tool usage
+- Token consumption
+- Confidence scores
+- Risk scores
+- Agent reasoning
+- Historical memory
+
+making every decision completely auditable.
+
+---
+
+# 🏗 System Architecture
 
 ```text
-GitHub Pull Request
+          Pull Request Opened
+                   │
+                   ▼
+          GitHub Actions Workflow
+                   │
+                   ▼
+         Engineering Orchestrator
+                   │
+        ┌──────────┴──────────┐
+        │                     │
+        ▼                     ▼
+ Planning Agent         Memory Service
         │
-GitHub Action
+        ▼
+ Dynamic Agent Selection
         │
-FastAPI Backend
-        │
-Release Manager
-        │
-Engineering Council
-        │
-Shared Trace Store
-        │
-GitHub Checks API
-        │
-Pull Request Review
+        ▼
+ ┌───────────────────────────────┐
+ │ Security Officer              │
+ │ Principal Architect           │
+ │ QA Director                   │
+ │ DevOps Lead                   │
+ │ Red Team                      │
+ └───────────────────────────────┘
+               │
+               ▼
+        Release Manager
+               │
+               ▼
+GitHub PR Comment + Check Run
+```
+
+---
+
+# 🛠 Technology Stack
+
+## Backend
+
+- Python 3.10+
+- FastAPI
+- SQLAlchemy
+- SQLite
+- Pydantic Settings
+- HTTPX
+
+## AI
+
+- Ollama
+- Qwen2.5-Coder
+- OpenAI (Fallback)
+
+## Frontend
+
+- React 19
+- Vite
+- Tailwind CSS
+- Radix UI
+
+## DevOps
+
+- GitHub Actions
+- Self-hosted Runner
+
+---
+
+# 📂 Repository Structure
+
+```text
+code_council/
+│
+├── backend/
+│   ├── agents/
+│   ├── orchestrator/
+│   ├── llm/
+│   ├── services/
+│   ├── observability/
+│   ├── models/
+│   └── api/
+│
+├── frontend/
+│
+├── demo/
+│
+├── .github/
+│   └── workflows/
+│
+├── ARCHITECTURE.md
+├── CONFIGURATION_ARCHITECTURE.md
+└── REPOSITORY_STRUCTURE.md
+```
+
+---
+
+# 🧩 AI Agent Roles
+
+| Agent | Responsibility |
+|--------|----------------|
+| 🧠 Planning Agent | Determines review strategy |
+| 🔒 Security Officer | Security vulnerabilities & secrets |
+| 🏗 Principal Architect | Code quality & architecture |
+| 🧪 QA Director | Testing & coverage |
+| ⚙️ DevOps Lead | Infrastructure & deployment |
+| 🛡 Red Team | Exploit validation |
+| 👑 Release Manager | Final engineering verdict |
+
+---
+
+# 🔄 Review Workflow
+
+1. Pull Request is opened
+2. GitHub Action starts
+3. Files are indexed
+4. Historical memory is loaded
+5. Planning Agent selects reviewers
+6. Specialists perform analysis
+7. Agents collaborate
+8. Release Manager combines findings
+9. GitHub Check Run is updated
+10. PR receives an engineering governance report
+
+---
+
+# 📈 Sample Verdicts
+
+## ✅ GO
+
+- No critical findings
+- High readiness
+- Safe to merge
+
+---
+
+## ⚠ NEEDS_CHANGES
+
+- Minor issues detected
+- Tests missing
+- Improvements recommended
+
+---
+
+## ❌ NO_GO
+
+- Critical vulnerabilities
+- High deployment risk
+- Merge blocked
+
+---
+
+# ⚡ Running Locally
+
+## Backend
+
+```bash
+cd backend
+
+pip install -r requirements-dev.txt
+
+uvicorn app.main:app --reload
+```
+
+---
+
+## Frontend
+
+```bash
+cd frontend
+
+npm install
+
+npm run dev
+```
+
+---
+
+## Requirements
+
+- Python 3.10+
+- Node.js
+- Ollama
+- GitHub Self-hosted Runner
+
+---
+
+# 🎯 Why Code Council AI?
+
+Traditional AI code reviewers:
+
+- One opinion
+- Static analysis
+- No collaboration
+- No governance
+- Limited explainability
+
+Code Council AI provides:
+
+✅ Multiple engineering experts
+
+✅ Dynamic review planning
+
+✅ Cross-agent collaboration
+
+✅ Engineering governance
+
+✅ GitHub-native integration
+
+✅ Explainable AI decisions
+
+✅ Complete audit trail
+
+---
+
+# 🔮 Future Roadmap
+
+- Redis Event Bus
+- LangGraph orchestration
+- Multi-tenant SaaS
+- WebSocket Mission Control
+- Live Engineering War Room
+- Enterprise dashboards
+- Sandbox execution
+- Advanced security scanning
+
+---
+
+# 🏆 Built For
+
+- AI Hackathons
+- Engineering Teams
+- DevSecOps
+- Platform Engineering
+- Enterprise CI/CD
+- Software Governance
+
+---
+
+# 👨‍💻 Team
+
+Built with ❤️ to reimagine software engineering governance using autonomous AI agents.
+
+---
+
+<div align="center">
+
+### ⭐ If you found this project interesting, consider giving it a star!
+
+**Engineering Governance. Powered by AI.**
+
+</div>
