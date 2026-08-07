@@ -354,4 +354,6 @@ Built with ❤️ to reimagine software engineering governance using autonomous 
 
 **Engineering Governance. Powered by AI.**
 
+Frontend Demo simulation file showing agent conversation streams and llm and api call stats present here : "https://github.com/vixkumar/Agentic-AI-Code-Council"
+
 </div>
